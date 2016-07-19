@@ -1,43 +1,43 @@
-exports.getPassengers = function (req, res) {
-  var mock = [
-    {
-      'pk': 1,
-      'username': 'Alex',
-      'first_name': 'Rodriguez',
-      'last_name': 'Rodriguez'
-    },
-    {
-      'pk': 2,
-      'username': 'Bruce',
-      'first_name': 'Wayne',
-      'last_name': 'Wayne'
-    }
-  ];
+var Passenger = require('../models/passenger.model');
 
-  res.json(mock);
+exports.getPassengers = function (req, res) {
+  // TODO: add pagination and crap.
+  Passenger.find({}, function (err, passengers) {
+    res.json(passengers);
+  });
 };
 
 exports.getById = function (req, res) {
-  var mock = {
-    'pk': req.params.id,
-    'username': 'Alex',
-    'first_name': 'Rodriguez',
-    'last_name': 'Rodriguez',
-    'email': 'alex@email.com',
-    'skype_id': 'alex_id',
-    'cellphone': 987654321
-  };
+  Passenger.find({id: req.params.id}, function (err, passenger) {
+    if (!passenger || passenger.length === 0) {
+      res.status(404).send('Passenger not found');
+      return;
+    }
 
-  res.json(mock);
+    // TODO: build cleaner
+    res.json(passenger[0]);
+  });
 };
 
 exports.register = function (req, res) {
   var passenger = req.body;
-
-  var mock = {
-    'lol': passenger.name,
-    'detail': 'Successful passenger added lol'
+  var result = {
+    code: 0,
+    detail: 'Passenger has been added',
+    passenger: null
   };
 
-  res.json(mock);
+  // TODO: Validate and stuff.
+  // TODO: promise it!!!!!!!!! promise-mongo
+  newPassenger = Passenger(passenger);
+  newPassenger.save(function (err) {
+    if (err) {
+      result.code = 666;
+      result.detail = err.message;
+    }
+    passenger.id = newPassenger.id;
+    result.passenger = passenger;
+
+    res.json(result);
+  });
 };

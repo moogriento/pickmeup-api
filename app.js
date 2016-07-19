@@ -4,6 +4,9 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
+// TODO: mongodb connection, pool it.
+var db = require('./models/db');
+
 var index = require('./routes/index.js');
 var routes = require('./routes/routes.js');
 var passengers = require('./routes/passenger.js');
