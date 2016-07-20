@@ -25,5 +25,28 @@
       }
     </pre>
   </ul>
+  <p>Routes</p>
+  <ul>
+    <li>GET /api/routes/list/</li>
+    <li>GET /api/routes/{route_id}/</li>
+    <li>GET /api/routes/passenger/{passenger_id}/</li>
+    <li>POST /api/routes/register/</li>
+    <div>
+      Content type: application/json
+    </div>
+    <pre>
+      {
+        "departure": "Belatrix - San Isidro",
+        "arrival": "Magdalena",
+        "cost": 15,
+        "payment_type": "Automatico",
+        "departure_time": "2016-07-19T17:00:00.000Z",
+        "contact": "Juan Perez",
+        "streets": ["Canaval y Moreyra", "Begonias", "Javier Prado", "Pershing"],
+        "seats": 4,
+        "passengers": [1, 2]
+      }
+    </pre>
+  </ul>
 </body>
 </html>

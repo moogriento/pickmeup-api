@@ -1,3 +1,5 @@
+// TODO: deacoplate this, create another layer to abstract the mongodb crap
+// This should handle only the requests without caring about the db
 var Passenger = require('../models/passenger.model');
 
 exports.getPassengers = function (req, res) {
@@ -23,7 +25,7 @@ exports.register = function (req, res) {
   var passenger = req.body;
   var result = {
     code: 0,
-    detail: 'Passenger has been added',
+    detail: 'Passenger has been created',
     passenger: null
   };
 

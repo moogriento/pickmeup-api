@@ -1,50 +1,49 @@
+var Route = require('../models/route.model');
+
 exports.getRoutes = function (req, res) {
-  var mock = [{
-      'pk': 1,
-      'departure': 'belatrix',
-      'arrival': 'la molina',
-      'sits': 3,
-      'contact': {
-        'id': 2,
-        'password': '',
-        'last_login': null,
-        'is_superuser': false,
-        'username': 'Bruce',
-        'first_name': 'Wayne',
-        'last_name': 'Wayne',
-        'email': 'bruce@email.com',
-        'is_staff': false,
-        'is_active': true,
-        'date_joined': '2016-07-01T10:52:02.253971Z',
-        'skype_id': 'bwayne_id',
-        'cellphone': 98744444,
-        'groups': [],
-        'user_permissions': []
-      }
-    }];
-  res.json(mock);
+
+  // TODO: add pagination and crap.
+  Route.find({}, function (err, routes) {
+    res.json(routes);
+  });
 };
 
 exports.getById = function (req, res) {
-  var mock = {
-    'pk': 1,
-    'departure': 'belatrix',
-    'arrival': 'la molina',
-    'comments': 'javier prado',
-    'sits': 3,
-    'contact': 2,
-    'passengers': [
-      2
-    ]
-  };
+  Route.find({id: req.params.id}, function (err, route) {
+    if (!route || route.length === 0) {
+      res.status(404).send('Route not found');
+      return;
+    }
 
-  res.json(mock);
+    // TODO: build cleaner
+    res.json(route[0]);
+  });
 };
 
 exports.getByPassengerId = function (req, res) {
-  res.json({passenger_id: req.params.passenger_id});
+  Route.find({passengers: parseInt(req.params.passenger_id, 10)}, function (err, routes) {
+    res.json(routes);
+  });
 };
 
 exports.register = function (req, res) {
-  res.json({'detail': ':)'});
+  var route = req.body;
+  var result = {
+    code: 0,
+    detail: 'Route has been created',
+    route: null
+  };
+
+  // TODO: you know, promise it as passenger
+  newRoute = Route(route);
+  newRoute.save(function (err) {
+    if (err) {
+      result.code = 666;
+      result.detail = err.message;
+    }
+    route.id = newRoute.id;
+    result.route = route;
+
+    res.json(result);
+  });
 };
