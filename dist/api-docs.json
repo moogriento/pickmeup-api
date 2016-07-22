@@ -161,7 +161,7 @@
           }
         }
     },
-    "/api/routes/passenger/{id}": {
+    "/api/routes/passenger/{passenger_id}": {
        "get": {
           "tags": ["Routes"],
           "description": "Get Routes by Passenger Id",
@@ -171,7 +171,7 @@
           ],
           "parameters": [
               	{
-	                "name": "id",
+	                "name": "passenger_id",
 	                "in": "path",
 	                "description": "Get routes by passenger id",
 	                "type": "integer",
