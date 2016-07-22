@@ -3,10 +3,10 @@ var router = express.Router();
 var passengerController = require('../controllers/passenger.controller.js');
 // Base path is /api/passenger
 
-router.get('/list', passengerController.getPassengers);
+router.get('/', passengerController.getPassengers);
 
 router.get('/:id', passengerController.getById);
 
-router.post('/register', passengerController.register);
+router.post('/', passengerController.register);
 
 module.exports = router;

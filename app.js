@@ -3,6 +3,9 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+//seting swagger
+var argv = require('minimist')(process.argv.slice(2));
+var swagger = require("swagger-node-express");
 
 // TODO: mongodb connection, pool it.
 var db = require('./models/db');
@@ -12,21 +15,33 @@ var routes = require('./routes/routes.js');
 var passengers = require('./routes/passenger.js');
 
 var app = express();
-
+var subpath = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
+app.use(bodyParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cors());
 
 // routing config
-app.use('/', index);
+//app.use('/', index);
 app.use('/api/routes', routes);
 app.use('/api/passenger', passengers);
+
+//swagger
+app.use("/v1", subpath);
+swagger.setAppHandler(subpath);
+app.use(express.static('dist'));
+
+app.get('/', function (req, res) {
+        res.sendFile(__dirname + '/dist/index.html');
+});
+
+swagger.configureSwaggerPaths('', 'api-docs', '');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

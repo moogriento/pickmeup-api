@@ -1,0 +1,359 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Pick me UP API",
+    "description": "Get your hands clean using it ;)",
+    "termsOfService": ""
+  },
+  "basePath": "/",
+  "tags" : [
+    {"name": "Passenger", 
+    "description": "All related to Passengers"
+    },
+    {"name": "Routes", 
+    "description": "All related to Routes"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/passenger/{id}": {
+       "get": {
+          "tags": ["Passenger"],
+          "description": "Get Passengers by Id",
+          "operationId": "for the URL",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+              	{
+	                "name": "id",
+	                "in": "path",
+	                "description": "Get passenger by id",
+	                "type": "integer",
+	                "required": true,
+	              	"schema": 
+	              		{
+		                	"$ref": ""
+		                }
+        		}
+          ],
+          "responses": {
+            "200": {
+              "description": "create response",
+              "schema": {
+                 "$ref": "#/definitions/createPassenger"
+              }
+            }
+          }
+        }
+    },
+    "/api/passenger/": {
+       "get": {
+          "tags": ["Passenger"],
+          "description": "Get Passenger's List",
+          "operationId": "for the URL",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+              
+          ],
+          "responses": {
+            "200": {
+              "description": "create response",
+              "schema": {
+                	"$ref": "#/definitions/createPassenger"
+              }
+            }
+          }
+        }
+    },
+    "/api/passenger": {
+       "post": {
+          "tags": ["Passenger"],
+          "description": "Get Passengers by Id",
+          "operationId": "for the URL",
+          "consumes": [
+          "application/json"
+        	],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+              	{
+	                "name": "body",
+	                "in": "body",
+	                "description": "Get passenger by id",
+	              	"schema": 
+	              		{
+		                	"$ref": "#/definitions/createPassenger"
+		                }
+        		}
+          ],
+          "responses": {
+            "201": {
+              "description": "create response",
+              "schema": {
+                 "$ref": "#/definitions/201success"
+              }
+            }
+          }
+        }
+    },
+    "/api/routes/{id}": {
+       "get": {
+          "tags": ["Routes"],
+          "description": "Get Routes by Id",
+          "operationId": "for the URL",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+              	{
+	                "name": "id",
+	                "in": "path",
+	                "description": "Get routes by id",
+	                "type": "integer",
+	                "required": true,
+	              	"schema": 
+	              		{
+		                	"$ref": ""
+		                }
+        		}
+          ],
+          "responses": {
+            "200": {
+              "description": "create response",
+              "schema": {
+                 "$ref": "#/definitions/createRoute"
+              }
+            }
+          }
+        }
+    },
+    "/api/routes/": {
+       "get": {
+          "tags": ["Routes"],
+          "description": "Get Route's List",
+          "operationId": "for the URL",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+              
+          ],
+          "responses": {
+            "200": {
+              "description": "create response",
+              "schema": {
+                	"$ref": "#/definitions/createRoute"
+              }
+            }
+          }
+        }
+    },
+    "/api/routes/passenger/{id}": {
+       "get": {
+          "tags": ["Routes"],
+          "description": "Get Routes by Passenger Id",
+          "operationId": "for the URL",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+              	{
+	                "name": "id",
+	                "in": "path",
+	                "description": "Get routes by passenger id",
+	                "type": "integer",
+	                "required": true,
+	              	"schema": 
+	              		{
+		                	"$ref": "#/definitions/createRoute"
+		                }
+        		}
+          ],
+          "responses": {
+            "200": {
+              "description": "create response",
+              "schema": {
+                 "$ref": "#/definitions/createRoute"
+              }
+            }
+          }
+        }
+    },
+    "/api/routes": {
+       "post": {
+          "tags": ["Routes"],
+          "description": "Get Passengers by Id",
+          "operationId": "for the URL",
+          "consumes": [
+          "application/json"
+        	],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+              	{
+	                "name": "body",
+	                "in": "body",
+	                "description": "Get passenger by id",
+	              	"schema": 
+	              		{
+		                	"$ref": "#/definitions/createRoute"
+		                }
+        		}
+          ],
+          "responses": {
+            "201": {
+              "description": "create response",
+              "schema": {
+                 "$ref": "#/definitions/201success"
+              }
+            }
+          }
+        }
+    }
+  },
+  "definitions": {
+ 	"createPassenger": {
+      "properties": 
+  		{	
+	        "username": {
+	          "required":true,
+	          "type": "string",
+	          "example": "string"
+	        },
+	        "first_name": {
+	          "required":true,
+	          "type": "string",
+	          "example": "string"
+	        },
+	        "last_name": {
+	          "required":true,
+	          "type": "string",
+	          "example": "string"
+	        },
+	        "email": {
+	          "required":true,
+	          "type": "email",
+	          "example": "mail@mail.com"
+	        },
+	        "skype_id": {
+	          "required":true,
+	          "type": "string",
+	          "example": "string"
+	        },
+	        "cellphone": {
+	          "required":true,
+	          "type":"integer",
+	          "format": "int64",
+	          "example": 999999999
+	        } 
+      }
+    },
+    "createRoute": {
+      "properties": 
+  		{	
+	        "departure": {
+	          "required":true,
+	          "type": "string",
+	          "example": "string"
+	        },
+	        "arrival": {
+	          "required":true,
+	          "type": "string",
+	          "example": "string"
+	        },
+	        "cost": {
+	          "required":true,
+	          "type": "double",
+	          "example": "0.0"
+	        },
+	        "payment_type": {
+	          "required":true,
+	          "type": "string",
+	          "example": "string"
+	        },
+	        "contact": {
+	          "required":true,
+	          "type": "string",
+	          "example": "string"
+	        },
+	        "contact": {
+	          "required":true,
+	          "type": "string",
+	          "example": "[\"Canaval y Moreyra\", \"Begonias\", \"Javier Prado\", \"Pershing\"]"
+	        },
+	        "streets": {
+	          "required":true,
+	          "type":"integer",
+	          "format": "int64",
+	          "example": 999999999
+	        },
+	        "passengers": {
+	          "required":true,
+	          "type": "string",
+	          "example": "[1, 2]"
+	        }
+      }
+    },
+    "response": {
+        "properties": {
+          "jobID": {
+            "required":true,
+            "type": "string",
+            "example": "23423456543"
+          },
+          "request": {
+            "required":true,
+            "type": "schema",
+            "example": {
+              "eventId":"mathmaticial",
+              "numberRequired": 500
+            }
+          }
+      }
+    },
+    "delete": {
+        "properties": {
+            "jobID": {
+              "required": true,
+              "type" : "string",
+              "example" : "234344234234"
+            },
+            "status" : {
+              "required": true,
+              "type": "string",
+              "example": "deleted"
+            }
+        }
+    },
+    "201success" : {
+       "properties": {
+        "message": {
+          "type": "status",
+          "example" : "200"
+        }
+      }
+    },
+    "400error" : {
+       "properties": {
+        "message": {
+          "type": "string",
+          "example" : "400 Bad Request"
+        }
+      }
+    }
+  }
+}
