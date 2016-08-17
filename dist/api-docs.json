@@ -109,6 +109,38 @@
           }
         }
     },
+    "/api/passenger/login": {
+       "post": {
+          "tags": ["Passenger"],
+          "description": "Authenticate passenger",
+          "operationId": "for the URL",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+                {
+                  "name": "body",
+                  "in": "body",
+                  "description": "Login credentials",
+                  "schema": 
+                    {
+                      "$ref": "#/definitions/loginPassenger"
+                    }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "create response",
+              "schema": {
+                 "$ref": "#/definitions/201success"
+              }
+            }
+          }
+        }
+    },
     "/api/routes/{id}": {
        "get": {
           "tags": ["Routes"],
@@ -223,10 +255,72 @@
             }
           }
         }
+    },
+    "/api/routes/add": {
+       "post": {
+          "tags": ["Routes"],
+          "description": "Add passenger to a route",
+          "operationId": "for the URL",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Association data",
+              "schema": 
+                {
+                  "$ref": "#/definitions/addPassengerToRoute"
+                }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "create response",
+              "schema": {
+                 "$ref": "#/definitions/201success"
+              }
+            }
+          }
+        }
     }
   },
   "definitions": {
- 	"createPassenger": {
+    "addPassengerToRoute": {
+      "properties": 
+      { 
+          "route_id": {
+            "required":true,
+            "type": "integer",
+            "example": "1"
+          },
+          "passenger_id": {
+            "required":true,
+            "type": "integer",
+            "example": "2"
+          }
+      }
+    },
+    "loginPassenger": {
+      "properties": 
+      { 
+          "username": {
+            "required":true,
+            "type": "string",
+            "example": "test01"
+          },
+          "password": {
+            "required":true,
+            "type": "string",
+            "example": "z213zwe232"
+          }
+      }
+    },
+ 	  "createPassenger": {
       "properties": 
   		{	
 	        "username": {

@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+
 var autoIncrement = require('mongoose-auto-increment');
 
 // TODO: set env config and crap

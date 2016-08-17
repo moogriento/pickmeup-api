@@ -11,4 +11,6 @@ router.get('/passenger/:passenger_id', routeController.getByPassengerId);
 
 router.post('/', routeController.register);
 
+router.post('/add', routeController.addPassenger);
+
 module.exports = router;

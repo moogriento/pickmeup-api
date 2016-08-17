@@ -4,21 +4,23 @@ var Passenger = require('../models/passenger.model');
 
 exports.getPassengers = function (req, res) {
   // TODO: add pagination and crap.
-  Passenger.find({}, function (err, passengers) {
-    res.json(passengers);
-  });
+  Passenger.find({})
+    .then(function (passengers) {
+      res.json(passengers);
+    });
 };
 
 exports.getById = function (req, res) {
-  Passenger.find({id: req.params.id}, function (err, passenger) {
-    if (!passenger || passenger.length === 0) {
-      res.status(404).send('Passenger not found');
-      return;
-    }
+  Passenger.findOne({id: req.params.id})
+    .then(function (passenger) {
+      if (!passenger) {
+        res.status(404).send('Passenger not found');
+        return;
+      }
 
-    // TODO: build cleaner
-    res.json(passenger[0]);
-  });
+      // TODO: build cleaner
+      res.json(passenger);
+    });
 };
 
 exports.register = function (req, res) {
@@ -30,16 +32,44 @@ exports.register = function (req, res) {
   };
 
   // TODO: Validate and stuff.
-  // TODO: promise it!!!!!!!!! promise-mongo
   newPassenger = Passenger(passenger);
-  newPassenger.save(function (err) {
-    if (err) {
+  newPassenger.save()
+    .then(function () {
+      passenger.id = newPassenger.id;
+      result.passenger = passenger;
+      res.json(result);
+    })
+    .catch(function (err) {
       result.code = 666;
       result.detail = err.message;
-    }
-    passenger.id = newPassenger.id;
-    result.passenger = passenger;
+      res.json(result);
+    });
+};
 
-    res.json(result);
-  });
+exports.login = function (req, res) {
+  var result = {
+    code: 0,
+    detail: '',
+    passenger: null
+  };
+
+  // TODO: hashed pwd?
+  Passenger.findOne({username: req.body.username, password: req.body.password})
+    .then(function (passenger) {
+
+      if (!passenger) {
+        result.code = 99;
+        result.detail = 'Invalid username or password';
+        res.json(result);
+        return;
+      }
+
+      result.passenger = passenger;
+      res.json(result);
+    })
+    .catch(function (err) {
+      result.code = 666;
+      result.detail = err.message;
+      res.json(result);
+    });
 };

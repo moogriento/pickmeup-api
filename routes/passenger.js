@@ -9,4 +9,6 @@ router.get('/:id', passengerController.getById);
 
 router.post('/', passengerController.register);
 
+router.post('/login', passengerController.login);
+
 module.exports = router;
