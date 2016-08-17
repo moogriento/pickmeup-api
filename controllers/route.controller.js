@@ -1,113 +1,115 @@
-var Route = require('../models/route.model');
-var Passenger = require('../models/passenger.model');
-var Promise = require('bluebird');
+var Route = require('../models/route.model'),
+    Passenger = require('../models/passenger.model'),
+    Promise = require('bluebird'),
+    messages = require('../util/messages');
 
 exports.getRoutes = function (req, res) {
+    // TODO: add pagination and crap.
+    Route.find({})
+        .then(function (routes) {
+            var returnRoutes = [];
+            routes.forEach(function (element) {
+                var newRoute = element.toJSON();
+                newRoute.links = {};
+                newRoute.links.self = 'http://' + req.headers.host + '/api/routes/' + element.id;
+                returnRoutes.push(newRoute);
+            });
 
-  // TODO: add pagination and crap.
-  Route.find({})
-    .then(function (routes) {
-      res.json(routes);
-    });
+            res.json(returnRoutes);
+        });
 };
 
 exports.getById = function (req, res) {
+    Route.findOne({id: req.params.id})
+        .then(function (route) {
+            if (!route) {
+                res.status(404).send(messages.routes.notFound);
+                return;
+            }
+            var newRoute = route.toJSON();
+            newRoute.links = {};
+            newRoute.links.parent = 'http://' + req.headers.host + '/api/routes/';
+            // TODO: build cleaner
 
-  Route.findOne({id: req.params.id})
-    .then(function (route) {
-      if (!route) {
-        res.status(404).send('Route not found');
-        return;
-      }
+            newRoute.links.related = {};
+            newRoute.links.related.passengers = []
+            newRoute.passengers.forEach(function (passenger) {
+                newRoute.links.related.passengers.push({id:passenger,
+                    url: 'http://' + req.headers.host + '/api/routes/passenger/' + passenger});
+            });
 
-      // TODO: build cleaner
-      res.json(route);
-    })
-    .catch(function (err) {
-      res.json({
-        code: 666,
-        detail: err.message
-      });
-    });
+            res.json(newRoute);
+        })
+        .catch(function (err) {
+            res.status(500).send(err.message);
+        });
 };
 
 exports.getByPassengerId = function (req, res) {
-  Route.find({passengers: parseInt(req.params.passenger_id, 10)})
-    .then(function (routes) {
-      res.json(routes);
-    });
+    Route.find({passengers: parseInt(req.params.passenger_id, 10)})
+        .then(function (routes) {
+
+            var returnRoutes = [];
+            routes.forEach(function (element) {
+                var newRoute = element.toJSON();
+                newRoute.links = {};
+                newRoute.links.self = 'http://' + req.headers.host + '/api/routes/' + element.id;
+                returnRoutes.push(newRoute);
+            });
+
+
+            var newRoutePassenger = {routes:returnRoutes};
+            newRoutePassenger.links = {};
+            newRoutePassenger.links.related = 'http://' + req.headers.host + '/api/passenger/'+ req.params.passenger_id;
+            res.json(newRoutePassenger);
+        });
 };
 
 exports.register = function (req, res) {
-  var route = req.body;
-  var result = {
-    code: 0,
-    detail: 'Route has been created',
-    route: null
-  };
+    var route = req.body;
 
-  // TODO: validate data
-  newRoute = Route(route);
-  newRoute.save()
-    .then(function () {
-      route.id = newRoute.id;
-      result.route = route;
-
-      res.json(result);
-    })
-    .catch(function (err) {
-      result.code = 666;
-      result.detail = err.message;
-      res.json(result);
-    });
+    // TODO: validate data
+    newRoute = Route(route);
+    newRoute.save()
+        .then(function () {
+            res.status(201).send(messages.routes.created);
+        })
+        .catch(function (err) {
+            res.status(500).send(err.message);
+        });
 };
 
 exports.addPassenger = function (req, res) {
-  var data = req.body;
-  var result = {
-    code: 0,
-    detail: 'Passenger has been added to the route'
-  };
+    var data = req.body;
 
-  Promise.resolve([
-    Passenger.findOne({id: data.passenger_id}),
-    Route.findOne({id: data.route_id}),
-    Route.findOne({id: data.route_id, passengers: parseInt(data.passenger_id, 10)})
-  ])
-  .spread(function(passenger, route, routeWithPassenger) {
+    Promise.resolve([
+        Passenger.findOne({id: data.passenger_id}),
+        Route.findOne({id: data.route_id}),
+        Route.findOne({id: data.route_id, passengers: parseInt(data.passenger_id, 10)})
+    ])
+        .spread(function (passenger, route, routeWithPassenger) {
 
-    if (!passenger) {
-      res.json({
-        code: 99,
-        detail: 'Invalid passenger ID'
-      });
-      return;
-    }
+            if (!passenger) {
+                res.status(422).send(messages.routes.invalidPassengerId);
+                return;
+            }
 
-    if (!route) {
-      res.json({
-        code: 99,
-        detail: 'Invalid route ID'
-      });
-      return;
-    }
+            if (!route) {
+                res.status(422).send(messages.routes.invalidRouterId);
+                return;
+            }
 
-    if (routeWithPassenger) {
-      res.json({
-        code: 99,
-        detail: 'Passenger has already been added to the route'
-      });
-      return;
-    }
+            if (routeWithPassenger) {
+                res.status(422).send(messages.routes.passengerAlreadyAdded);
+                return;
+            }
 
-    Route.update({id: data.route_id}, { $push: {'passengers': data.passenger_id}}, {})
-      .then(function () {
-        res.json(result);
-      })
-      .catch(function (err) {
-        result.code = 666;
-        result.detail = err.message;
-        res.json(result);
-      });
-  });
+            Route.update({id: data.route_id}, {$push: {'passengers': data.passenger_id}}, {})
+                .then(function () {
+                    res.status(204).send(messages.routes.passengerAdded);
+                })
+                .catch(function (err) {
+                    res.status(500).send(err.message);
+                });
+        });
 };
