@@ -379,26 +379,26 @@
 	          "type": "string",
 	          "example": "string"
 	        },
-	        "contact": {
+	        "routeOwner": {
 	          "required":true,
 	          "type": "string",
 	          "example": "string"
 	        },
-	        "contact": {
+            "departureTime": {
 	          "required":true,
-	          "type": "string",
-	          "example": "[\"Canaval y Moreyra\", \"Begonias\", \"Javier Prado\", \"Pershing\"]"
+	          "type": "date-time",
+	          "example": "full-date 'T' full-time"
 	        },
-	        "streets": {
+	        "placeAbailable": {
 	          "required":true,
-	          "type":"integer",
-	          "format": "int64",
-	          "example": 999999999
+	          "type": "integer",
+              "format": "int64",
+	          "example": "0"
 	        },
-	        "passengers": {
+	        "addressDestination": {
 	          "required":true,
-	          "type": "string",
-	          "example": "[1, 2]"
+	          "type":"string",
+	          "example": "[Street1 - Street2]"
 	        }
       }
     },
