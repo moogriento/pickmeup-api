@@ -58,7 +58,7 @@ exports.login = function (req, res) {
             if (!passenger) {
                 res.status(422).send(messages.passengers.invalid);
             }
-            res.status(202).send(messages.passengers.loginAccepted);
+            res.status(202).json(passenger);
 
         })
         .catch(function (err) {
