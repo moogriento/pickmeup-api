@@ -52,7 +52,7 @@ exports.register = function (req, res) {
 
 exports.login = function (req, res) {
     // TODO: hashed pwd?
-    Passenger.findOne({username: req.body.username, password: req.body.password})
+    Passenger.findOne({email: req.body.email, password: req.body.password})
         .then(function (passenger) {
 
             if (!passenger) {

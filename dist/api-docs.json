@@ -308,10 +308,10 @@
     "loginPassenger": {
       "properties": 
       { 
-          "username": {
+          "email": {
             "required":true,
-            "type": "string",
-            "example": "test01"
+            "type": "email",
+            "example": "mail@mail.com"
           },
           "password": {
             "required":true,
