@@ -71,7 +71,6 @@ exports.register = function (req, res) {
     // TODO: validate data
     newRoute = Route(route);
         newRoute.id = undefined;
-
     if(newRoute.passengers.length>3){
         res.send("Muchos pasajeros")
     }

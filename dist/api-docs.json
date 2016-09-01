@@ -308,10 +308,10 @@
     "loginPassenger": {
       "properties": 
       { 
-          "username": {
+          "email": {
             "required":true,
-            "type": "string",
-            "example": "test01"
+            "type": "email",
+            "example": "mail@mail.com"
           },
           "password": {
             "required":true,
@@ -357,49 +357,49 @@
       }
     },
     "createRoute": {
-      "properties": 
-  		{	
-	        "departure": {
-	          "required":true,
-	          "type": "string",
-	          "example": "BELATRIX_LA_MOLINA"
-	        },
-            "departureTime": {
-              "required":true,
-              "type": "string",
-              "example": "1472765799931"
-            },
-	        "destination": {
-	          "required":true,
-	          "type": "string",
-	          "example": "CHORRILLOS"
-	        },
-	        "cost": {
-	          "required":true,
-	          "type": "double",
-	          "example": "20.0"
-	        },
-	        "paymentType": {
-	          "required":true,
-	          "type": "string",
-	          "example": "CASH"
-	        },
-	        "routeOwner": {
-	          "required":true,
-              "type":"integer",
-              "format": "int64",
-	          "example": 1
-	        },
-            "addressDestination": {
-              "required":true,
-              "type": "string",
-              "example": "[Javier Prado, Arequipa, Colonial]"
-            },
-	        "passengers": {
-	          "required":true,
-	          "type": "string",
-	          "example": [2, 3]
-	        }
+      "properties":
+      {
+        "departure": {
+          "required":true,
+          "type": "string",
+          "example": "BELATRIX_LA_MOLINA"
+        },
+        "departureTime": {
+          "required":true,
+          "type": "string",
+          "example": "1472765799931"
+        },
+        "destination": {
+          "required":true,
+          "type": "string",
+          "example": "CHORRILLOS"
+        },
+        "cost": {
+          "required":true,
+          "type": "double",
+          "example": "20.0"
+        },
+        "paymentType": {
+          "required":true,
+          "type": "string",
+          "example": "CASH"
+        },
+        "routeOwner": {
+          "required":true,
+          "type":"integer",
+          "format": "int64",
+          "example": 1
+        },
+        "addressDestination": {
+          "required":true,
+          "type": "string",
+          "example": "[Javier Prado, Arequipa, Colonial]"
+        },
+        "passengers": {
+          "required":true,
+          "type": "string",
+          "example": [2, 3]
+        }
       }
     },
     "response": {

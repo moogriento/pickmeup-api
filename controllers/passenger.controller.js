@@ -52,13 +52,13 @@ exports.register = function (req, res) {
 
 exports.login = function (req, res) {
     // TODO: hashed pwd?
-    Passenger.findOne({username: req.body.username, password: req.body.password})
+    Passenger.findOne({email: req.body.email, password: req.body.password})
         .then(function (passenger) {
 
             if (!passenger) {
                 res.status(422).send(messages.passengers.invalid);
             }
-            res.status(202).send(messages.passengers.loginAccepted);
+            res.status(202).json(passenger);
 
         })
         .catch(function (err) {
