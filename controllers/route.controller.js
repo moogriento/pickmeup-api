@@ -37,7 +37,7 @@ exports.getById = function (req, res) {
                 newRoute.links.related.passengers.push({id:passenger,
                     url: 'http://' + req.headers.host + '/api/routes/passenger/' + passenger});
             });
-
+            newRoute.addressDestination="destination"
             res.json(newRoute);
         })
         .catch(function (err) {
@@ -70,11 +70,21 @@ exports.register = function (req, res) {
 
     // TODO: validate data
     newRoute = Route(route);
+        newRoute.id = undefined;
+
+    if(newRoute.passengers.length>3){
+        res.send("Muchos pasajeros")
+    }
+    newRoute.placeAvailable = 3-newRoute.passengers.length;
+
     newRoute.save()
         .then(function () {
             res.status(201).send(messages.routes.created);
         })
         .catch(function (err) {
+            console.log(err)
+
+            console.log(newRoute)
             res.status(500).send(err.message);
         });
 };

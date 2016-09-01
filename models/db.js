@@ -4,7 +4,7 @@ mongoose.Promise = require('bluebird');
 var autoIncrement = require('mongoose-auto-increment');
 
 // TODO: set env config and crap
-var dbURI = 'mongodb://pickmeup:$h1ttyPwd61@ds023435.mlab.com:23435/pickmeup';
+var dbURI = 'mongodb://localhost/pickmeup';
 
 mongoose.connect(dbURI);
 

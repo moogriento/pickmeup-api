@@ -362,43 +362,43 @@
 	        "departure": {
 	          "required":true,
 	          "type": "string",
-	          "example": "string"
+	          "example": "BELATRIX_LA_MOLINA"
 	        },
-	        "arrival": {
+            "departureTime": {
+              "required":true,
+              "type": "string",
+              "example": "1472765799931"
+            },
+	        "destination": {
 	          "required":true,
 	          "type": "string",
-	          "example": "string"
+	          "example": "CHORRILLOS"
 	        },
 	        "cost": {
 	          "required":true,
 	          "type": "double",
-	          "example": "0.0"
+	          "example": "20.0"
 	        },
-	        "payment_type": {
+	        "paymentType": {
 	          "required":true,
 	          "type": "string",
-	          "example": "string"
+	          "example": "CASH"
 	        },
-	        "contact": {
+	        "routeOwner": {
 	          "required":true,
-	          "type": "string",
-	          "example": "string"
+              "type":"integer",
+              "format": "int64",
+	          "example": 1
 	        },
-	        "contact": {
-	          "required":true,
-	          "type": "string",
-	          "example": "[\"Canaval y Moreyra\", \"Begonias\", \"Javier Prado\", \"Pershing\"]"
-	        },
-	        "streets": {
-	          "required":true,
-	          "type":"integer",
-	          "format": "int64",
-	          "example": 999999999
-	        },
+            "addressDestination": {
+              "required":true,
+              "type": "string",
+              "example": "[Javier Prado, Arequipa, Colonial]"
+            },
 	        "passengers": {
 	          "required":true,
 	          "type": "string",
-	          "example": "[1, 2]"
+	          "example": [2, 3]
 	        }
       }
     },

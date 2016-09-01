@@ -3,13 +3,13 @@ var autoIncrement = require('mongoose-auto-increment');
 
 var RouteSchema = new mongoose.Schema({
     departure: {type:String, require:true},
-    arrival: {type:String, require:true},
+    destination: {type:String, require:true},
     cost: Number,
-    payment_type: String,
-    departure_time: Date,
-    contact: String,
-    streets: Array,
-    seats: Number,
+    paymentType: String,
+    routeOwner:String,
+    departureTime: String,
+    placeAvailable: Number,
+    addressDestination: String,
     passengers: Array
 });
 
