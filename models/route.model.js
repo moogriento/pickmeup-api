@@ -7,7 +7,7 @@ var RouteSchema = new mongoose.Schema({
     cost: Number,
     paymentType: String,
     routeOwner:String,
-    departureTime: Date,
+    departureTime: Number,
     placeAvailable: Number,
     addressDestination: String,
     passengers: Array
