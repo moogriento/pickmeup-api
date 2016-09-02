@@ -62,7 +62,9 @@ exports.getByPassengerId = function (req, res) {
             newRoutePassenger.links = {};
             newRoutePassenger.links.related = 'http://' + req.headers.host + '/api/passenger/'+ req.params.passenger_id;
             res.json(newRoutePassenger);
-        });
+     }).catch(function (err) {
+        console.log(err)
+    });
 };
 
 exports.register = function (req, res) {
@@ -74,6 +76,7 @@ exports.register = function (req, res) {
     if(newRoute.passengers.length>3){
         res.send("Muchos pasajeros")
     }
+    newRoute.passengers.push(parseInt(newRoute.routeOwner));
     newRoute.placeAvailable = 3-newRoute.passengers.length;
 
     newRoute.save()
@@ -113,7 +116,7 @@ exports.addPassenger = function (req, res) {
                 return;
             }
 
-            Route.update({id: data.route_id}, {$push: {'passengers': data.passenger_id}}, {})
+            Route.update({id: data.route_id}, {$push: {'passengers': parseInt(data.passenger_id, 10)}}, {})
                 .then(function () {
                     res.status(204).send(messages.routes.passengerAdded);
                 })
