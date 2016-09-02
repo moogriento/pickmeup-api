@@ -37,7 +37,6 @@ exports.getById = function (req, res) {
                 newRoute.links.related.passengers.push({id:passenger,
                     url: 'http://' + req.headers.host + '/api/routes/passenger/' + passenger});
             });
-            newRoute.addressDestination="destination"
             res.json(newRoute);
         })
         .catch(function (err) {
