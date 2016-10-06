@@ -83,9 +83,9 @@ exports.register = function (req, res) {
             res.status(201).send(messages.routes.created);
         })
         .catch(function (err) {
-            console.log(err)
+            console.log(err);
 
-            console.log(newRoute)
+            console.log(newRoute);
             res.status(500).send(err.message);
         });
 };
